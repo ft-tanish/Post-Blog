@@ -1,18 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { LoginContext, LoginProvider } from './LoginContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const Login = () => {
-    const navigate = useNavigate();
     const { mobileNumber, otp, error, handleMobileNumberChange, handleOTPChange, handleLogin } = useContext(LoginContext);
-
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleLogin(handleSuccessfulLogin());
-    };
-
-    const handleSuccessfulLogin = () => {
-        navigate('/blogpost'); // Redirect to BlogPost page after successful login
+        handleLogin(navigate);
     };
 
     return (

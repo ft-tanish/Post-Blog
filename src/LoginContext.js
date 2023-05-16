@@ -1,12 +1,15 @@
 import React, { createContext, useState } from 'react';
 import data from './data.json';
 
+
 export const LoginContext = createContext();
 
-export const LoginProvider = ({ children, handleSuccessfulLogin }) => {
+export const LoginProvider = ({ children }) => {
     const [mobileNumber, setMobileNumber] = useState('');
     const [otp, setOtp] = useState('');
     const [error, setError] = useState('');
+
+
 
     const handleMobileNumberChange = (e) => {
         setMobileNumber(e.target.value);
@@ -16,8 +19,10 @@ export const LoginProvider = ({ children, handleSuccessfulLogin }) => {
         setOtp(e.target.value);
     };
 
-
-    const handleLogin = async (handleSuccessfulLogin) => {
+    const handleSuccessfulLogin = (navigate) => {
+        navigate('/blogpost'); // Redirect to BlogPost page after successful login
+    };
+    const handleLogin = async (navigate) => {
         try {
             const user = data?.users?.find(
                 (user) => user?.mobileNumber === mobileNumber && user?.otp === otp
@@ -25,7 +30,7 @@ export const LoginProvider = ({ children, handleSuccessfulLogin }) => {
 
             if (user) {
                 // Handle successful login
-                handleSuccessfulLogin()
+                handleSuccessfulLogin(navigate)
                 console.log('Login successful!');
             } else {
                 setError('Invalid mobile number or OTP');
